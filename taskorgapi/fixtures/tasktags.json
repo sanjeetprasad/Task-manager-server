@@ -1,0 +1,33 @@
+
+[
+    {
+        "model": "taskorgapi.tasktags",
+        "pk": 1,
+        "fields": {
+            "tag":1,
+            "task":1
+        }
+    }, {
+        "model": "taskorgapi.tasktags",
+        "pk": 2,
+        "fields": {
+            "tag":2,
+            "task":2
+        }
+    }, {
+        "model": "taskorgapi.tasktags",
+        "pk": 3,
+        "fields": {
+            "tag":3,
+            "task":3
+        }
+    }, {
+        "model": "taskorgapi.tasktags",
+        "pk": 4,
+        "fields": {
+            "tag":3,
+            "task":3
+        }
+    }
+]
+    

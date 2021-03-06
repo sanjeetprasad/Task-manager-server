@@ -1,0 +1,27 @@
+[
+    {
+        "model": "taskorgapi.categories",
+        "pk": 1,
+        "fields": {
+            "label": "Less Improtant"
+        }
+    }, {
+        "model": "taskorgapi.categories",
+        "pk": 2,
+        "fields": {
+            "label": "Important"
+        }
+    }, {
+        "model": "taskorgapi.categories",
+        "pk": 3,
+        "fields": {
+            "label": "More Important"
+        }
+    }, {
+        "model": "taskorgapi.categories",
+        "pk": 4,
+        "fields": {
+            "label": "Very Important"
+        }
+    }
+]

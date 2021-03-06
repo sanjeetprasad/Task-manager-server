@@ -1,0 +1,31 @@
+[
+    {
+        "model": "taskorgapi.tags",
+        "pk": 1,
+        "fields": {
+            "label": "House works",
+            "author": 1
+        }
+    }, {
+        "model": "taskorgapi.tags",
+        "pk": 2,
+        "fields": {
+            "label": "Office Works",
+            "author": 1
+        }
+    }, {
+        "model": "taskorgapi.tags",
+        "pk": 3,
+        "fields": {
+            "label": "School Works",
+            "author": 1
+        }
+    }, {
+        "model": "taskorgapi.tags",
+        "pk": 4,
+        "fields": {
+            "label": "Helth",
+            "author": 1
+        }
+    }
+]

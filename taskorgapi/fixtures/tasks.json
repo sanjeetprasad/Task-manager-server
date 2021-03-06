@@ -1,0 +1,42 @@
+[
+    {
+        "model": "taskorgapi.tasks",
+        "pk": 1,
+        "fields":{
+            "user":1,
+            "category": 1,
+            "create_date_time": "2020-08-28T14:51:39.989Z",
+            "title": "Group Project",
+            "description": "This is vesy important and i need to copmlete before the time.",
+            "completion_date_time": "2020-08-28T14:51:39.989Z"
+            
+            
+        }
+    }, {
+        "model": "taskorgapi.tasks",
+        "pk": 2,
+        "fields":{
+            "user":1,
+            "category": 2,
+            "create_date_time": "2020-08-28T14:51:39.989Z",
+            "title": "Wash your cloth",
+            "description": "This is vesy important and i need to copmlete before the time.",
+            "completion_date_time": "2020-08-28T14:51:39.989Z"
+            
+            
+        }
+    }, {
+        "model": "taskorgapi.tasks",
+        "pk": 3,
+        "fields":{
+            "user":1,
+            "category": 3,
+            "create_date_time": "2020-08-28T14:51:39.989Z",
+            "title": "Job Interview",
+            "description": "This is vesy important and i need to copmlete before the time.",
+            "completion_date_time": "2020-08-28T14:51:39.989Z"
+        }
+            
+            
+    }
+]
