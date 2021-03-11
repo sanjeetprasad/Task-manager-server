@@ -11,6 +11,6 @@ class Tasks(models.Model):
     create_date_time = models.DateTimeField(auto_now=False, auto_now_add=True)
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=250)
-    completion_date_time = models.DateTimeField(auto_now=False, auto_now_add=False)
+    due_date_time = models.DateTimeField(auto_now=False, auto_now_add=False)
     
     
