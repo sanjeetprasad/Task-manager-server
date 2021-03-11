@@ -43,5 +43,5 @@ class TasksView(ViewSet):
 
 #     class Meta:
 #         model = Tasks
-#         fields = ('id', 'user', 'category', 'create_date_time', 'title', 'description', 'completion_date_time')
+#         fields = ('id', 'user', 'category', 'create_date_time', 'title', 'description', 'due_date_time')
 #         depth = 1
