@@ -29,11 +29,11 @@ class TasksView(ViewSet):
         task = Tasks()
         task.title = request.data["title"]
         task.description = request.data["description"]
-        task.create_date_time = request.data["create_date_time"]
-        task.due_date_time = request.data["due_date_time"]
+        task.create_date_time = request.data["createDateTime"]
+        task.due_date_time = request.data["dueDateTime"]
         task.user = task_user
 
-        category = Categories.objects.get(pk=request.data["category"])
+        category = Categories.objects.get(pk=request.data["categoryId"])
 
         task.category = category
 
@@ -94,12 +94,12 @@ class TasksView(ViewSet):
         task = Tasks.objects.get(pk=pk)
         task.title = request.data["title"]
         task.description = request.data["description"]
-        task.create_date_time = request.data["create_date_time"]
-        task.due_date_time = request.data["due_date_time"]
+        task.create_date_time = request.data["createDateTime"]
+        task.due_date_time = request.data["dueDateTime"]
 
         task.user = task_user
 
-        category = Categories.objects.get(pk=request.data['category'])
+        category = Categories.objects.get(pk=request.data['categoryId'])
         task.category = category
         
         task.save()
@@ -127,4 +127,4 @@ class Task_w_TagSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tasks
         fields = ('id', 'user', 'category', 'create_date_time', 'title', 'description', 'due_date_time', 'tags')
-        depth = 2
+        
