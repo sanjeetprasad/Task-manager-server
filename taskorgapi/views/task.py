@@ -17,6 +17,9 @@ class TasksView(ViewSet):
         #Handles get all posts from the database
 
         tasks = Tasks.objects.filter(user= request.auth.user)
+        category_id = self.request.query_params.get("category_id", None)
+        if category_id is not None:
+            tasks = tasks.filter(category__id=category_id)
       
         serializer = TasksSerializer(
             tasks, many=True, context={'request': request})
@@ -165,11 +168,17 @@ class TasksSerializer(serializers.ModelSerializer):
         fields = ( 'id', 'user', 'category', 'create_date_time', 'title', 'description', 'due_date_time' )
         depth = 1
 
+class CategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Categories
+        fields = ('id', 'label')
+    
 class Task_w_TagSerializer(serializers.ModelSerializer):
     """ Serializer to Join Task and Tags """
     # Defines the 'tags' field in the Serializer
     tags = TagSerializer(many=True)
-
+    category = CategorySerializer(many=False)
     class Meta:
         model = Tasks
         fields = ('id', 'user', 'category', 'create_date_time', 'title', 'description', 'due_date_time', 'tags')

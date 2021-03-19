@@ -3,3 +3,4 @@ from .auth import register_user
 from .tags import TagsView
 from .Categories import CategoryView
 from .task import TasksView
+from .user import UserView

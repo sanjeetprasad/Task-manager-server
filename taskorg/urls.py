@@ -3,14 +3,14 @@ from django.urls import path
 from django.conf.urls import include
 from rest_framework import routers
 from taskorgapi.views import register_user, login_user
-from taskorgapi.views import CategoryView, TagsView, TasksView
+from taskorgapi.views import CategoryView, TagsView, TasksView, UserView
 # from taskorgapi.views import TasksView, CategoryView, TagsView, UserView
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'categories', CategoryView, 'category')
 router.register(r'tasks', TasksView, 'task')
 router.register(r"tags", TagsView, "tag")
-# router.register(r'user', UserView, 'user')
+router.register(r'user', UserView, 'user')
 
 urlpatterns = [
    path('', include(router.urls)),

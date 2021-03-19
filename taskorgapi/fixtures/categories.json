@@ -3,7 +3,7 @@
         "model": "taskorgapi.categories",
         "pk": 1,
         "fields": {
-            "label": "Less Improtant"
+            "label": "Less Important"
         }
     }, {
         "model": "taskorgapi.categories",
