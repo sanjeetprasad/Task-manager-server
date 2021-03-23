@@ -12,5 +12,15 @@ class Tasks(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=250)
     due_date_time = models.DateTimeField(auto_now=False, auto_now_add=False)
+
+    # Defines the virtual property named by the "related_name" in the Task_Tag model and TaskSerializer
+
+    @property
+    def tags(self):
+        return self.__tags
+
+    @tags.setter
+    def tags(self, value):
+        self.__tags = value
     
     

@@ -17,10 +17,59 @@ class TasksView(ViewSet):
         #Handles get all posts from the database
 
         tasks = Tasks.objects.filter(user= request.auth.user)
+        category_id = self.request.query_params.get("category_id", None)
+        if category_id is not None:
+            tasks = tasks.filter(category__id=category_id)
       
         serializer = TasksSerializer(
             tasks, many=True, context={'request': request})
         return Response(serializer.data)
+
+    @action(methods=[ 'post', 'delete'], detail=True)
+    def tag(self, request, pk=None):
+
+        if request.method=="POST":
+            
+            task=Tasks.objects.get(pk=pk)
+            tag=Tags.objects.get(pk=request.data["tagId"])
+            try:
+                task_tag = TaskTags.objects.get(task=task, tag=tag)
+                return Response(
+                    {'message': 'this tag is on the task.'},
+                    status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+            except TaskTags.DoesNotExist:    
+                task_tag=TaskTags()
+                task_tag.task=task
+                task_tag.tag=tag
+                task_tag.save()
+                return Response({}, status=status.HTTP_201_CREATED)
+
+        elif request.method=="DELETE":
+            try:
+                task=Tasks.objects.get(pk=pk)
+
+            except Tasks.DoesNotExist:
+                return Response(
+                    {'message': 'Task does not exist.'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            try:
+                task=Tasks.objects.get(pk=pk)
+                
+                tag=Tags.objects.get(pk=request.data["tagId"])
+                
+                task_tag = TaskTags.objects.get(task=task, tag=tag)
+                
+                task_tag.delete()
+                return Response(None, status=status.HTTP_204_NO_CONTENT)
+            except TaskTags.DoesNotExist:
+                return Response(
+                    {'message': 'tag is not on the task'},
+                    status=status.HTTP_404_NOT_FOUND
+                )
+        return Response({}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
 
     def create(self, request):
         
@@ -29,11 +78,11 @@ class TasksView(ViewSet):
         task = Tasks()
         task.title = request.data["title"]
         task.description = request.data["description"]
-        task.create_date_time = request.data["create_date_time"]
-        task.due_date_time = request.data["due_date_time"]
+        task.create_date_time = request.data["createDateTime"]
+        task.due_date_time = request.data["dueDateTime"]
         task.user = task_user
 
-        category = Categories.objects.get(pk=request.data["category"])
+        category = Categories.objects.get(pk=request.data["categoryId"])
 
         task.category = category
 
@@ -72,16 +121,16 @@ class TasksView(ViewSet):
         """
 
         try: 
-            # Finds the post by the id provided by URL
+                # Finds the task by the id provided by URL
             task = Tasks.objects.get(pk=pk)
-            # Filters tags matching the post primary key via the Tag_Post
-            # matching_tags = Tag.objects.filter(tags__post=post)
-            # Joins the tags to the post object
-            # print(matching_tags.query)
-            # post.tags=matching_tags
+            # Filters tags matching the task primary key via the Tag_task
+            matching_tags = Tags.objects.filter(tags__task=task)
+            # Joins the tags to the task object
+            print(matching_tags.query)
+            task.tags=matching_tags
 
 
-            serializer = TasksSerializer(task, context={'request': request}) 
+            serializer = Task_w_TagSerializer(task, context={'request': request}) 
             return Response(serializer.data)
 
         except Exception as ex:
@@ -94,12 +143,12 @@ class TasksView(ViewSet):
         task = Tasks.objects.get(pk=pk)
         task.title = request.data["title"]
         task.description = request.data["description"]
-        task.create_date_time = request.data["create_date_time"]
-        task.due_date_time = request.data["due_date_time"]
+        task.create_date_time = request.data["createDateTime"]
+        task.due_date_time = request.data["dueDateTime"]
 
         task.user = task_user
 
-        category = Categories.objects.get(pk=request.data['category'])
+        category = Categories.objects.get(pk=request.data['categoryId'])
         task.category = category
         
         task.save()
@@ -117,13 +166,19 @@ class TasksSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tasks
         fields = ( 'id', 'user', 'category', 'create_date_time', 'title', 'description', 'due_date_time' )
+        depth = 1
 
+class CategorySerializer(serializers.ModelSerializer):
 
+    class Meta:
+        model = Categories
+        fields = ('id', 'label')
+    
 class Task_w_TagSerializer(serializers.ModelSerializer):
-    """ Serializer to Join Post and Tags """
+    """ Serializer to Join Task and Tags """
     # Defines the 'tags' field in the Serializer
     tags = TagSerializer(many=True)
-
+    category = CategorySerializer(many=False)
     class Meta:
         model = Tasks
         fields = ('id', 'user', 'category', 'create_date_time', 'title', 'description', 'due_date_time', 'tags')
